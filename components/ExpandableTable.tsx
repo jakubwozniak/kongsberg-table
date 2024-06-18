@@ -1,75 +1,69 @@
 "use client";
-import React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import TableBreadcrumb from "./TableBreadcrumb";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  TableRow as ShadcnTableRow,
 } from "@/components/ui/table";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import TableHeader from "./TableHeader";
+import TableRow from "./TableRow";
 
-const ExpandableTable = () => {
-  const links = [
-    { id: 0, name: "item 1", viewCount: 0 },
-    { id: 1, name: "item 2", viewCount: 1 },
-  ];
+const ExpandableTable = <T extends { id: string } | undefined>({
+  items,
+  columns,
+}: ExpandableTableProps<T>) => {
+  const [expandedId, setExpandedIndex] = useState<string | null>(null);
+
+  const handleTriggerClick = (id: string) => {
+    if (id === expandedId) {
+      setExpandedIndex(null);
+    } else {
+      setExpandedIndex(id);
+    }
+  };
+
+  if (items === undefined) return null;
+
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <TableBreadcrumb />
-        <CardTitle>Table Title</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="font-medium">Name</TableHead>
-              <TableHead className="font-medium">Id</TableHead>
-              <TableHead className="font-medium">View Count</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {links
-              ? links.map((link) => (
-                  <Collapsible key={link.id} asChild>
-                    <>
-                      <CollapsibleTrigger asChild>
-                        <TableRow>
-                          <TableCell>{link.name}</TableCell>
-                          <TableCell>{link.id}</TableCell>
-                          <TableCell>{link.viewCount}</TableCell>
-                        </TableRow>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent asChild>
-                        <TableRow className="bg-red-500" key={link.id}>
-                          <TableCell>{link.name}</TableCell>
-                          <TableCell>{link.name}</TableCell>
-                          <TableCell>{link.name}</TableCell>
-                        </TableRow>
-                      </CollapsibleContent>
-                    </>
-                  </Collapsible>
-                ))
-              : null}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+    <Table>
+      <TableHeader columns={columns} />
+      <TableBody>
+        {items !== undefined
+          ? items.map((item, index) => (
+              <Collapsible
+                key={item!.id}
+                asChild
+                open={item!.id === expandedId}
+              >
+                <>
+                  <CollapsibleTrigger
+                    asChild
+                    onClick={() => handleTriggerClick(item!.id)}
+                  >
+                    <TableRow
+                      item={item}
+                      columns={columns as Column<unknown>[]}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent asChild>
+                    <TableRow
+                      className="bg-red-700"
+                      item={item}
+                      columns={columns as Column<unknown>[]}
+                    />
+                  </CollapsibleContent>
+                </>
+              </Collapsible>
+            ))
+          : null}
+      </TableBody>
+    </Table>
   );
 };
 

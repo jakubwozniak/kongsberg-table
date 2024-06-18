@@ -15,17 +15,13 @@ const TableBreadcrumb = () => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink>Home</BreadcrumbLink>
+          <BreadcrumbLink className="text-2xl">Books</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink onClick={() => alert("clicked")}>
-            Components
+          <BreadcrumbLink className="text-2xl" onClick={() => alert("clicked")}>
+            Book 1
           </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
