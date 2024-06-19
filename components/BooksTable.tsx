@@ -6,6 +6,9 @@ import { useGetAllBooksQuery } from "@/lib/state/books/apiSlice";
 
 import { Card, CardContent } from "./ui/card";
 import TableCardHeader from "./TableCardHeader";
+import LoaderSpinner from "./LoaderSpinner";
+import Error from "./Error";
+import BooksTableDetails from "./BooksTableDetails";
 
 const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
   const { data, error, isLoading } = useGetAllBooksQuery({
@@ -18,7 +21,17 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
     }
   }, [data, error, isLoading]);
 
-  if (isLoading) return null;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <LoaderSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <Error error="Error loading books. Please try again later." />;
+  }
 
   return (
     <Card className="w-full">
@@ -27,6 +40,7 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
         <ExpandableTable<Book | undefined>
           items={data?.items as (Book | undefined)[]}
           columns={columns as Column<Book | undefined>[]}
+          DetailsComponent={BooksTableDetails}
         />
       </CardContent>
     </Card>

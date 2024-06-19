@@ -25,7 +25,7 @@ export const booksColumns: Column<Book>[] = [
   {
     header: "Published Date",
     accessor: (item) => item.volumeInfo.publishedDate,
-    className: "hidden 2xl:table-cell",
+    className: "hidden 2xl:table-cell text-nowrap",
   },
   {
     header: "Page Count",

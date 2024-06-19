@@ -1,32 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow as ShadcnTableRow,
-} from "@/components/ui/table";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./ui/collapsible";
+import { Table, TableBody } from "@/components/ui/table";
+
 import TableHeader from "./TableHeader";
-import TableRow from "./TableRow";
+import TableItemCollapsible from "./TableItemCollapsible";
 
 const ExpandableTable = <T extends { id: string } | undefined>({
+  DetailsComponent,
   items,
   columns,
+  ...props
 }: ExpandableTableProps<T>) => {
   const [expandedId, setExpandedIndex] = useState<string | null>(null);
-
-  const handleTriggerClick = (id: string) => {
-    if (id === expandedId) {
-      setExpandedIndex(null);
-    } else {
-      setExpandedIndex(id);
-    }
-  };
 
   if (items === undefined) return null;
 
@@ -36,30 +21,15 @@ const ExpandableTable = <T extends { id: string } | undefined>({
       <TableBody>
         {items !== undefined
           ? items.map((item, index) => (
-              <Collapsible
+              <TableItemCollapsible
+                DetailsComponent={DetailsComponent}
                 key={item!.id}
-                asChild
-                open={item!.id === expandedId}
-              >
-                <>
-                  <CollapsibleTrigger
-                    asChild
-                    onClick={() => handleTriggerClick(item!.id)}
-                  >
-                    <TableRow
-                      item={item}
-                      columns={columns as Column<unknown>[]}
-                    />
-                  </CollapsibleTrigger>
-                  <CollapsibleContent asChild>
-                    <TableRow
-                      className="bg-red-700"
-                      item={item}
-                      columns={columns as Column<unknown>[]}
-                    />
-                  </CollapsibleContent>
-                </>
-              </Collapsible>
+                item={item}
+                columns={columns as Column<T>[]}
+                expandedId={expandedId}
+                setExpandedIndex={setExpandedIndex}
+                {...props}
+              />
             ))
           : null}
       </TableBody>

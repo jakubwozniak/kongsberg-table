@@ -15,12 +15,12 @@ const TableBreadcrumb = () => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink className="text-2xl">Books</BreadcrumbLink>
+          <BreadcrumbLink className="text-xl">Books</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink className="text-2xl" onClick={() => alert("clicked")}>
-            Book 1
+          <BreadcrumbLink className="text-xl" onClick={() => alert("clicked")}>
+            Working with Vulnerable...
           </BreadcrumbLink>
         </BreadcrumbItem>
       </BreadcrumbList>

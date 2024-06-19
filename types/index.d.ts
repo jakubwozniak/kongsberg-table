@@ -24,8 +24,10 @@ interface Column<T> {
 }
 
 interface ExpandableTableProps<T> {
+  DetailsComponent: React.ComponentType<any>;
   items: T[];
   columns: Column<T>[];
+  [key: string]: any;
 }
 
 interface BooksTableProps<T> {
@@ -41,4 +43,13 @@ interface TableRowProps<T> {
   columns: Column<T>[];
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLTableRowElement>) => void;
+}
+
+interface TableItemCollapsibleProps<T> {
+  DetailsComponent: React.ComponentType<any>;
+  item: T;
+  columns: Column<T>[];
+  expandedId: string | null;
+  setExpandedIndex: (id: string | null) => void;
+  [key: string]: any;
 }
