@@ -15,27 +15,29 @@ const ExpandableTable = <T extends { id: string } | undefined>({
   rootName,
   breadcrumbNamePath,
   itemCategoryPath,
+  listOfCategories,
   ...props
 }: ExpandableTableProps<T>) => {
   const { setBreadcrumb, setBreadcrumbNamePath } = useBreadcrumb();
-  const [expandedId, setExpandedIndex] = useState<string | null>(null);
 
   useEffect(() => {
     const handleBreadcrumbClick = () => {
-      setExpandedIndex(null);
       setBreadcrumb((prev) => [prev[0]]);
     };
 
     setBreadcrumbNamePath(breadcrumbNamePath);
     setBreadcrumb([
-      { label: rootName, onClick: () => handleBreadcrumbClick() },
+      { id: rootName, label: rootName, onClick: () => handleBreadcrumbClick() },
     ]);
   }, [setBreadcrumb, setBreadcrumbNamePath, breadcrumbNamePath, rootName]);
 
-  const categorizedItems = useMemo(() => {
-    const educationItems: T[] = [];
-    const historyItems: T[] = [];
+  const categorizedItems: { [key: string]: T[] } = useMemo(() => {
+    const categoryItems: { [key: string]: T[] } = {};
     const otherItems: T[] = [];
+
+    listOfCategories?.forEach((category) => {
+      categoryItems[category] = [];
+    });
 
     items?.forEach((item) => {
       const categories = getPropertyByPath(
@@ -45,39 +47,35 @@ const ExpandableTable = <T extends { id: string } | undefined>({
 
       if (!Array.isArray(categories)) return;
 
-      if (categories.includes("Education")) {
-        educationItems.push(item);
-      }
-      if (categories.includes("History")) {
-        historyItems.push(item);
-      }
+      let categorized = false;
 
-      if (
-        !categories.includes("Education") &&
-        !categories.includes("History")
-      ) {
+      categories.forEach((category) => {
+        if (listOfCategories.includes(category)) {
+          categoryItems[category].push(item);
+          categorized = true;
+        }
+      });
+
+      if (!categorized) {
         otherItems.push(item);
       }
     });
 
     return {
-      educationItems,
-      historyItems,
+      ...categoryItems,
       otherItems,
     };
-  }, [items, itemCategoryPath]);
+  }, [items, itemCategoryPath, listOfCategories]);
 
   if (items === undefined) return null;
 
-  const renderItem = (item: T) => (
+  const renderItem = (item: T, parentName: string) => (
     <TableItemCollapsible
       DetailsComponent={DetailsComponent}
       key={item!.id}
       item={item}
       columns={columns as Column<T>[]}
-      expandedId={expandedId}
-      setExpandedIndex={setExpandedIndex}
-      parentName={rootName}
+      parentName={parentName}
       {...props}
     />
   );
@@ -86,35 +84,21 @@ const ExpandableTable = <T extends { id: string } | undefined>({
     <Table>
       <TableHeader columns={columns} />
       <TableBody>
-        <ExpandableRow
-          id="Education"
-          expandedId={expandedId}
-          setExpandedIndex={setExpandedIndex}
-        >
-          <>
-            {categorizedItems.educationItems !== undefined
-              ? categorizedItems.educationItems.map((item, index) =>
-                  renderItem(item)
-                )
-              : null}
-          </>
-        </ExpandableRow>
-        <ExpandableRow
-          id="History"
-          expandedId={expandedId}
-          setExpandedIndex={setExpandedIndex}
-        >
-          <>
-            {categorizedItems.educationItems !== undefined
-              ? categorizedItems.educationItems.map((item, index) =>
-                  renderItem(item)
-                )
-              : null}
-          </>
-        </ExpandableRow>
-        {categorizedItems.otherItems !== undefined
-          ? categorizedItems.otherItems.map((item, index) => renderItem(item))
-          : null}
+        {listOfCategories.map((category) => (
+          <ExpandableRow
+            key={category}
+            id={category}
+            colSpan={columns.length}
+            parentName={rootName}
+          >
+            <>
+              {categorizedItems[category]?.map((item) =>
+                renderItem(item, category)
+              )}
+            </>
+          </ExpandableRow>
+        ))}
+        {categorizedItems.otherItems.map((item) => renderItem(item, rootName))}
       </TableBody>
     </Table>
   );

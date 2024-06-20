@@ -13,33 +13,30 @@ const TableItemCollapsible = <T extends { id: string } | undefined>({
   DetailsComponent,
   item,
   columns,
-  expandedId,
-  setExpandedIndex,
   parentName,
   ...props
 }: TableItemCollapsibleProps<T>) => {
   const {
+    breadcrumbIds,
     breadcrumbNamePath,
-    breadcrumb,
-    setBreadcrumb,
     addBreadcrumbItem,
     removeAllBreadcrumbItemChilds,
   } = useBreadcrumb();
   const handleTriggerClick = (id: string, title: string) => {
+    const isIdOpen = breadcrumbIds.includes(id);
+
     removeAllBreadcrumbItemChilds(parentName);
-    if (id === expandedId) {
-      setExpandedIndex(null);
-    } else {
-      setExpandedIndex(id);
+
+    if (!isIdOpen)
       addBreadcrumbItem({
+        id: id,
         label: title,
         onClick: () => null,
       });
-    }
   };
 
   return (
-    <Collapsible key={item!.id} asChild open={item!.id === expandedId}>
+    <Collapsible key={item!.id} asChild open={breadcrumbIds.includes(item!.id)}>
       <>
         <CollapsibleTrigger
           asChild

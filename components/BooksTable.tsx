@@ -46,6 +46,7 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
             breadcrumbNamePath="volumeInfo.title"
             itemCategoryPath="volumeInfo.categories"
             rootName="Books"
+            listOfCategories={["Education", "History", "Social Science"]}
           />
         </CardContent>
       </BreadcrumbProvider>

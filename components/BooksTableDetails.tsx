@@ -1,7 +1,7 @@
 import { Divide } from "lucide-react";
 import React from "react";
 
-const BooksTableDetails = ({ item }: any) => {
+const BooksTableDetails = ({ item }: { item: Book }) => {
   return (
     <div className="word-break max-w-screen flex flex-col">
       <div className="flex mb-4">

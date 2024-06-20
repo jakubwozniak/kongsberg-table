@@ -5,31 +5,38 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { TableCell, TableRow } from "./ui/table";
+import { useBreadcrumb } from "@/providers/BreadcrumbProvider";
 
 const ExpandableRow = ({
   id,
-  expandedId,
-  setExpandedIndex,
+  colSpan,
+  parentName,
   children,
-}: {
-  id: string;
-  expandedId: string | null;
-  setExpandedIndex: (id: string | null) => void;
-  children?: React.ReactNode;
-}) => {
+}: ExpandableRowProps) => {
+  const {
+    breadcrumbIds,
+    setBreadcrumb,
+    addBreadcrumbItem,
+    removeAllBreadcrumbItemChilds,
+  } = useBreadcrumb();
   const handleTriggerClick = (id: string) => {
-    if (id === expandedId) {
-      setExpandedIndex(null);
-    } else {
-      setExpandedIndex(id);
-    }
+    const isIdOpen = breadcrumbIds.includes(id);
+
+    removeAllBreadcrumbItemChilds(parentName);
+
+    if (!isIdOpen)
+      addBreadcrumbItem({
+        id: id,
+        label: id,
+        onClick: () => null,
+      });
   };
   return (
-    <Collapsible key={id} asChild open={id === expandedId}>
+    <Collapsible key={id} asChild open={breadcrumbIds.includes(id)}>
       <>
         <CollapsibleTrigger asChild onClick={() => handleTriggerClick(id)}>
           <TableRow>
-            <TableCell colSpan={8}>{id}</TableCell>
+            <TableCell colSpan={colSpan}>{id}</TableCell>
           </TableRow>
         </CollapsibleTrigger>
         <CollapsibleContent asChild>{children}</CollapsibleContent>

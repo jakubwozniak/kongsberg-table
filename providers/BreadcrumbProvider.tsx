@@ -17,20 +17,29 @@ export const BreadcrumbProvider: React.FC<BreadcrumbProviderProps> = ({
 }) => {
   const [breadcrumbNamePath, setBreadcrumbNamePath] = useState<string>("");
   const [breadcrumb, setBreadcrumb] = useState<BreadcrumbItem[]>([]);
+  const [breadcrumbIds, setBreadcrumbIds] = useState<string[]>([]);
 
   const addBreadcrumbItem = (item: BreadcrumbItem) => {
     setBreadcrumb((prev) => [...prev, item]);
   };
 
   const removeAllBreadcrumbItemChilds = (label: string) => {
+    if (label === undefined) return;
     setBreadcrumb((prev) => {
       const index = prev.findIndex((item) => item.label === label);
+
       return prev.slice(0, index + 1);
     });
   };
 
+  useMemo(() => {
+    const ids = breadcrumb.map((item) => item.id);
+    setBreadcrumbIds(ids);
+  }, [breadcrumb]);
+
   const value = useMemo(
     () => ({
+      breadcrumbIds,
       breadcrumbNamePath,
       setBreadcrumbNamePath,
       breadcrumb,
@@ -38,7 +47,7 @@ export const BreadcrumbProvider: React.FC<BreadcrumbProviderProps> = ({
       addBreadcrumbItem,
       removeAllBreadcrumbItemChilds,
     }),
-    [breadcrumbNamePath, breadcrumb]
+    [breadcrumbNamePath, breadcrumb, breadcrumbIds]
   );
 
   return (
