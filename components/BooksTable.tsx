@@ -9,6 +9,7 @@ import TableCardHeader from "./TableCardHeader";
 import LoaderSpinner from "./LoaderSpinner";
 import Error from "./Error";
 import BooksTableDetails from "./BooksTableDetails";
+import BreadcrumbProvider from "@/providers/BreadcrumbProvider";
 
 const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
   const { data, error, isLoading } = useGetAllBooksQuery({
@@ -35,14 +36,19 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
 
   return (
     <Card className="w-full">
-      <TableCardHeader title="Table title" />
-      <CardContent>
-        <ExpandableTable<Book | undefined>
-          items={data?.items as (Book | undefined)[]}
-          columns={columns as Column<Book | undefined>[]}
-          DetailsComponent={BooksTableDetails}
-        />
-      </CardContent>
+      <BreadcrumbProvider>
+        <TableCardHeader title="Table title" />
+        <CardContent>
+          <ExpandableTable<Book | undefined>
+            items={data?.items as (Book | undefined)[]}
+            columns={columns as Column<Book | undefined>[]}
+            DetailsComponent={BooksTableDetails}
+            breadcrumbNamePath="volumeInfo.title"
+            itemCategoryPath="volumeInfo.categories"
+            rootName="Books"
+          />
+        </CardContent>
+      </BreadcrumbProvider>
     </Card>
   );
 };

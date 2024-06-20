@@ -53,3 +53,21 @@ interface TableItemCollapsibleProps<T> {
   setExpandedIndex: (id: string | null) => void;
   [key: string]: any;
 }
+
+interface BreadcrumbContextType {
+  breadcrumbNamePath: string;
+  setBreadcrumbNamePath: React.Dispatch<React.SetStateAction<string>>;
+  breadcrumb: BreadcrumbItem[];
+  setBreadcrumb: React.Dispatch<React.SetStateAction<BreadcrumbItem[]>>;
+  addBreadcrumbItem: (item: BreadcrumbItem) => void;
+  removeAllBreadcrumbItemChilds: (label: string) => void;
+}
+
+interface BreadcrumbProviderProps {
+  children: ReactNode;
+}
+
+interface BreadcrumbItem {
+  label: string;
+  onClick: () => void;
+}

@@ -7,19 +7,34 @@ import {
 
 import TableRow from "./TableRow";
 import { TableRow as ShadcnTableRow, TableCell } from "@/components/ui/table";
+import { useBreadcrumb } from "@/providers/BreadcrumbProvider";
+import { getPropertyByPath } from "@/lib/utils";
 const TableItemCollapsible = <T extends { id: string } | undefined>({
   DetailsComponent,
   item,
   columns,
   expandedId,
   setExpandedIndex,
+  parentName,
   ...props
 }: TableItemCollapsibleProps<T>) => {
-  const handleTriggerClick = (id: string) => {
+  const {
+    breadcrumbNamePath,
+    breadcrumb,
+    setBreadcrumb,
+    addBreadcrumbItem,
+    removeAllBreadcrumbItemChilds,
+  } = useBreadcrumb();
+  const handleTriggerClick = (id: string, title: string) => {
+    removeAllBreadcrumbItemChilds(parentName);
     if (id === expandedId) {
       setExpandedIndex(null);
     } else {
       setExpandedIndex(id);
+      addBreadcrumbItem({
+        label: title,
+        onClick: () => null,
+      });
     }
   };
 
@@ -28,7 +43,12 @@ const TableItemCollapsible = <T extends { id: string } | undefined>({
       <>
         <CollapsibleTrigger
           asChild
-          onClick={() => handleTriggerClick(item!.id)}
+          onClick={() =>
+            handleTriggerClick(
+              item!.id,
+              getPropertyByPath(item, breadcrumbNamePath)
+            )
+          }
         >
           <TableRow item={item} columns={columns as Column<unknown>[]} />
         </CollapsibleTrigger>
