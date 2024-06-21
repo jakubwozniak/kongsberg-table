@@ -10,6 +10,7 @@ import LoaderSpinner from "./LoaderSpinner";
 import Error from "./Error";
 import BooksTableDetails from "./BooksTableDetails";
 import BreadcrumbProvider from "@/providers/BreadcrumbProvider";
+import ErrorBoundary from "./ErrorBoundary";
 
 const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
   const { data, error, isLoading } = useGetAllBooksQuery({
@@ -31,28 +32,34 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
   }
 
   if (error) {
-    return <Error error="Error loading books. Please try again later." />;
+    return (
+      <Card className="py-6">
+        <Error error="Error loading books. Please try again later." />
+      </Card>
+    );
   }
 
   return (
     <Card className="w-full">
       <BreadcrumbProvider>
-        <TableCardHeader title="Table title" />
+        <TableCardHeader />
         <CardContent>
-          <ExpandableTable<Book | undefined>
-            items={data?.items as (Book | undefined)[]}
-            columns={columns as Column<Book | undefined>[]}
-            DetailsComponent={BooksTableDetails}
-            breadcrumbNamePath="volumeInfo.title"
-            itemCategoryPath="volumeInfo.categories"
-            rootName="Books"
-            listOfCategories={[
-              { name: "Education", color: "emerald-400" },
-              { name: "History", color: "cyan-500" },
-              { name: "Social Science", color: "indigo-400" },
-              { name: "Business & Economics", color: "pink-500" },
-            ]}
-          />
+          <ErrorBoundary>
+            <ExpandableTable<Book | undefined>
+              items={data?.items as (Book | undefined)[]}
+              columns={columns as Column<Book | undefined>[]}
+              DetailsComponent={BooksTableDetails}
+              breadcrumbNamePath="volumeInfo.title"
+              itemCategoryPath="volumeInfo.categories"
+              rootName="Books"
+              listOfCategories={[
+                { name: "Education", color: "emerald-400" },
+                { name: "History", color: "cyan-500" },
+                { name: "Social Science", color: "indigo-400" },
+                { name: "Business & Economics", color: "pink-500" },
+              ]}
+            />
+          </ErrorBoundary>
         </CardContent>
       </BreadcrumbProvider>
     </Card>
