@@ -31,7 +31,7 @@ const ExpandableRow = ({
       addBreadcrumbItem({
         id: id,
         label: id,
-        onClick: () => null,
+        onClick: () => removeAllBreadcrumbItemChilds(id),
       });
   };
 

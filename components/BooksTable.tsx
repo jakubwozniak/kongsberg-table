@@ -50,6 +50,7 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
               { name: "Education", color: "emerald-400" },
               { name: "History", color: "cyan-500" },
               { name: "Social Science", color: "indigo-400" },
+              { name: "Business & Economics", color: "pink-500" },
             ]}
           />
         </CardContent>

@@ -20,16 +20,20 @@ const TableBreadcrumb = () => {
 
           return isLastItem ? (
             <BreadcrumbItem key={index}>
-              <BreadcrumbLink className="text-xl">{item.label}</BreadcrumbLink>
+              <BreadcrumbLink className="text-base line-clamp-1 max-w-40 md:max-w-60">
+                {item.label}
+              </BreadcrumbLink>
             </BreadcrumbItem>
           ) : (
             <React.Fragment key={index}>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  className="text-xl hover:text-black cursor-pointer"
+                  className="text-base hover:text-black cursor-pointer line-clamp-1 max-w-40 md:max-w-60"
                   onClick={item.onClick}
                 >
-                  {item.label}
+                  {item.label?.length > 10
+                    ? item.label.slice(0, 10)
+                    : item.label}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

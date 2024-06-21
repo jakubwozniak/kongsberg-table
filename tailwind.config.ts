@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        hsx: { raw: "(max-height: 500px)" }, // Custom height-based breakpoint
+      },
       height: {
         "calc-100vh-10rem": "calc(100vh - 10rem)",
         "calc-lvh-5rem": "calc(100dvh - 5rem)",
@@ -90,7 +93,12 @@ const config = {
     maxHeight: ["responsive"],
   },
   plugins: [require("tailwindcss-animate")],
-  safelist: ["border-emerald-400", "border-cyan-500", "border-indigo-400"],
+  safelist: [
+    "border-emerald-400",
+    "border-cyan-500",
+    "border-indigo-400",
+    "border-pink-500",
+  ],
 } satisfies Config;
 
 export default config;

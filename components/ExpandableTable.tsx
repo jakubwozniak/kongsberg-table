@@ -86,7 +86,7 @@ const ExpandableTable = <T extends { id: string } | undefined>({
   );
 
   return (
-    <div className="relative w-full h-calc-lvh-5rem max-h-calc-lvh-5rem md:max-h-calc-100vh-10rem overflow-x-auto">
+    <div className="relative w-full min-h-60 h-calc-lvh-5rem max-h-calc-lvh-5rem md:max-h-calc-100vh-10rem hsx:max-h-screen hsx:min-h-72 overflow-x-auto">
       <Table>
         <TableHeader columns={columns} />
         <TableBody>
@@ -97,7 +97,7 @@ const ExpandableTable = <T extends { id: string } | undefined>({
               colSpan={columns.length}
               parentName={rootName}
               itemsCount={categorizedItems[category.name].length}
-              className={`border-0 border-l-4 border-${category.color}`}
+              className={`border-0 border-t-0 border-l-4 border-${category.color}`}
             >
               <>
                 {categorizedItems[category.name]?.map((item) =>

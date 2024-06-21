@@ -13,7 +13,7 @@ const TableRow = React.forwardRef(function TableRow<T>(
     <ShadcnTableRow className={className} onClick={handleClick}>
       {columns.map((column, colIndex) => (
         <TableCell key={colIndex} className={`${column.className} min-h-24`}>
-          <div className="line-clamp-4 ">{column.accessor(item)}</div>
+          <div className="line-clamp-4">{column.accessor(item)}</div>
         </TableCell>
       ))}
     </ShadcnTableRow>

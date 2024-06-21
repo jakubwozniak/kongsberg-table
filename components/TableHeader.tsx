@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/table";
 const TableHeader = <T,>({ columns }: TableHeaderProps<T>) => {
   return (
-    <ShadcnTableHeader className="sticky top-0 bg-card z-10">
+    <ShadcnTableHeader className="sticky top-[-1px] bg-card z-10">
       <TableRow className="sticky">
         {columns.map((column, index) => {
           return (

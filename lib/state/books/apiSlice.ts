@@ -7,7 +7,7 @@ export const booksApi = createApi({
   endpoints: (builder) => ({
     getAllBooks: builder.query<BooksResponse, { key: string }>({
       query: ({ key }) => {
-        let params = `?q=people&langRestrict=en`;
+        let params = `?q=people&langRestrict=en&maxResults=40`;
         if (key) params += `&key=${key}`;
 
         return params;
