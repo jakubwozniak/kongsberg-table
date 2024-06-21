@@ -16,10 +16,16 @@ const ExpandableTable = <T extends { id: string } | undefined>({
   breadcrumbNamePath,
   itemCategoryPath,
   listOfCategories,
+  defaultSortColumnId = null,
+  defaultSortDirection = { direction: "asc" },
   ...props
 }: ExpandableTableProps<T>) => {
   const { setBreadcrumb, setBreadcrumbNamePath } = useBreadcrumb();
-
+  const [sortColumnId, setSortColumnId] = useState<number | null>(
+    defaultSortColumnId
+  );
+  const [sortDirection, setSortDirection] =
+    useState<SortDirection>(defaultSortDirection);
   useEffect(() => {
     const handleBreadcrumbClick = () => {
       setBreadcrumb((prev) => [prev[0]]);
@@ -31,6 +37,22 @@ const ExpandableTable = <T extends { id: string } | undefined>({
     ]);
   }, [setBreadcrumb, setBreadcrumbNamePath, breadcrumbNamePath, rootName]);
 
+  const toggleSortDirection = () => {
+    sortDirection.direction === "asc"
+      ? setSortDirection({ direction: "desc" })
+      : setSortDirection({ direction: "asc" });
+  };
+
+  const updateSortDirection = (id: number) => {
+    if (id === sortColumnId) {
+      if (sortDirection.direction === "desc") setSortColumnId(null);
+      toggleSortDirection();
+    } else {
+      setSortColumnId(id);
+      setSortDirection({ direction: "asc" });
+    }
+  };
+
   const categorizedItems: { [key: string]: T[] } = useMemo(() => {
     const categoryItems: { [key: string]: T[] } = {};
     const otherItems: T[] = [];
@@ -39,7 +61,20 @@ const ExpandableTable = <T extends { id: string } | undefined>({
       categoryItems[category.name] = [];
     });
 
-    items?.forEach((item) => {
+    const sortedItems =
+      sortColumnId !== null
+        ? [...items].sort((itemA, itemB) => {
+            const titleA =
+              columns[sortColumnId].accessorValue(itemA)?.toLowerCase() ?? "";
+            const titleB =
+              columns[sortColumnId].accessorValue(itemB)?.toLowerCase() ?? "";
+            return sortDirection.direction === "asc"
+              ? titleA.localeCompare(titleB)
+              : titleB.localeCompare(titleA);
+          })
+        : items;
+
+    sortedItems?.forEach((item) => {
       const categories = getPropertyByPath(
         item,
         itemCategoryPath
@@ -69,9 +104,16 @@ const ExpandableTable = <T extends { id: string } | undefined>({
       ...categoryItems,
       otherItems,
     };
-  }, [items, itemCategoryPath, listOfCategories]);
+  }, [
+    items,
+    itemCategoryPath,
+    listOfCategories,
+    columns,
+    sortColumnId,
+    sortDirection,
+  ]);
 
-  if (items === undefined) return null;
+  if (items === undefined) throw Error("No items to render.");
 
   const renderItem = (item: T, parentName: string, color: string) => (
     <TableItemCollapsible
@@ -88,7 +130,12 @@ const ExpandableTable = <T extends { id: string } | undefined>({
   return (
     <div className="relative w-full min-h-60 h-calc-lvh-5rem max-h-calc-lvh-5rem md:max-h-calc-100vh-10rem hsx:max-h-screen hsx:min-h-72 overflow-x-auto">
       <Table>
-        <TableHeader columns={columns} />
+        <TableHeader
+          sortColumnId={sortColumnId}
+          setSortColumnId={(id: number) => updateSortDirection(id)}
+          sortDirection={sortDirection}
+          columns={columns}
+        />
         <TableBody>
           {listOfCategories.map((category) => (
             <ExpandableRow

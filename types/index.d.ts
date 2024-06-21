@@ -20,6 +20,7 @@ interface BooksResponse {
 interface Column<T> {
   header: string;
   accessor: (item: T) => React.ReactNode;
+  accessorValue: (item: T) => string;
   className?: string;
 }
 
@@ -31,6 +32,8 @@ interface ExpandableTableProps<T> {
   breadcrumbNamePath: string;
   itemCategoryPath: string;
   listOfCategories: Category[];
+  defaultSortColumnId?: number | null;
+  defaultSortDirection?: SortDirection;
   [key: string]: any;
 }
 
@@ -45,6 +48,9 @@ interface BooksTableProps<T> {
 
 interface TableHeaderProps<T> {
   columns: Column<T>[];
+  setSortColumnId: (id: number) => void;
+  sortColumnId: number | null;
+  sortDirection: SortDirection;
 }
 
 interface TableRowProps<T> {
@@ -86,4 +92,8 @@ interface BreadcrumbItem {
   id: string;
   label: string;
   onClick: () => void;
+}
+
+interface SortDirection {
+  direction: "asc" | "desc";
 }

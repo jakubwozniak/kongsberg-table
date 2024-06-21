@@ -4,7 +4,14 @@ import {
   TableHeader as ShadcnTableHeader,
   TableRow,
 } from "@/components/ui/table";
-const TableHeader = <T,>({ columns }: TableHeaderProps<T>) => {
+import { cn } from "@/lib/utils";
+import { ArrowDownUp, ArrowUpDown } from "lucide-react";
+const TableHeader = <T,>({
+  columns,
+  setSortColumnId,
+  sortColumnId,
+  sortDirection,
+}: TableHeaderProps<T>) => {
   return (
     <ShadcnTableHeader className="sticky top-[-1px] bg-card z-10">
       <TableRow className="sticky">
@@ -12,11 +19,22 @@ const TableHeader = <T,>({ columns }: TableHeaderProps<T>) => {
           return (
             <TableHead
               key={index}
-              className={`${column.className} ${
-                index !== columns.length - 1 ? "relative left-2" : ""
-              }`}
+              onClick={() => setSortColumnId(index)}
+              className={cn(`${column.className} cursor-pointer`, {
+                "relative left-2": index !== columns.length - 1,
+                "text-neutral-700 font-semibold": index === sortColumnId,
+              })}
             >
-              {column.header}
+              <div className="flex items-center min-w-36">
+                <span className="pr-1">{column.header}</span>
+                {index === sortColumnId ? (
+                  sortDirection.direction === "asc" ? (
+                    <ArrowUpDown size={15} />
+                  ) : (
+                    <ArrowDownUp size={15} />
+                  )
+                ) : null}
+              </div>
             </TableHead>
           );
         })}

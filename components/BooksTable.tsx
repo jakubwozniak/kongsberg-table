@@ -12,7 +12,7 @@ import BooksTableDetails from "./BooksTableDetails";
 import BreadcrumbProvider from "@/providers/BreadcrumbProvider";
 import ErrorBoundary from "./ErrorBoundary";
 
-const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
+const BooksTable = <T,>({ columns }: BooksTableProps<T>) => {
   const { data, error, isLoading } = useGetAllBooksQuery({
     key: process.env.GOOGLE_API_KEY || "",
   });
@@ -53,10 +53,10 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
               itemCategoryPath="volumeInfo.categories"
               rootName="Books"
               listOfCategories={[
-                { name: "Education", color: "emerald-400" },
-                { name: "History", color: "cyan-500" },
-                { name: "Social Science", color: "indigo-400" },
-                { name: "Business & Economics", color: "pink-500" },
+                { name: "Business & Economics", color: "emerald-400" },
+                { name: "Education", color: "cyan-500" },
+                { name: "History", color: "indigo-400" },
+                { name: "Social Science", color: "pink-500" },
               ]}
             />
           </ErrorBoundary>

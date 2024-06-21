@@ -2,7 +2,7 @@
 
 import React from "react";
 import BooksTable from "./BooksTable";
-import { basicBooksColumns } from "@/constants/intex";
+import { basicBooksColumns } from "@/constants/bookTableColumns";
 
 const BooksTableBasicColumns = () => {
   return <BooksTable columns={basicBooksColumns} />;
