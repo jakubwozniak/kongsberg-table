@@ -46,7 +46,11 @@ const BooksTable = <T,>({ columns }: TableHeaderProps<T>) => {
             breadcrumbNamePath="volumeInfo.title"
             itemCategoryPath="volumeInfo.categories"
             rootName="Books"
-            listOfCategories={["Education", "History", "Social Science"]}
+            listOfCategories={[
+              { name: "Education", color: "emerald-400" },
+              { name: "History", color: "cyan-500" },
+              { name: "Social Science", color: "indigo-400" },
+            ]}
           />
         </CardContent>
       </BreadcrumbProvider>

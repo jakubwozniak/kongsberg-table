@@ -36,7 +36,7 @@ const ExpandableTable = <T extends { id: string } | undefined>({
     const otherItems: T[] = [];
 
     listOfCategories?.forEach((category) => {
-      categoryItems[category] = [];
+      categoryItems[category.name] = [];
     });
 
     items?.forEach((item) => {
@@ -49,9 +49,13 @@ const ExpandableTable = <T extends { id: string } | undefined>({
 
       let categorized = false;
 
-      categories.forEach((category) => {
-        if (listOfCategories.includes(category)) {
-          categoryItems[category].push(item);
+      categories.forEach((categoryName) => {
+        const matchingCategory = listOfCategories.find(
+          (category) => category.name === categoryName
+        );
+
+        if (matchingCategory) {
+          categoryItems[matchingCategory.name].push(item);
           categorized = true;
         }
       });
@@ -69,13 +73,14 @@ const ExpandableTable = <T extends { id: string } | undefined>({
 
   if (items === undefined) return null;
 
-  const renderItem = (item: T, parentName: string) => (
+  const renderItem = (item: T, parentName: string, color: string) => (
     <TableItemCollapsible
       DetailsComponent={DetailsComponent}
       key={item!.id}
       item={item}
       columns={columns as Column<T>[]}
       parentName={parentName}
+      className={`border-0 border-l-4 border-${color}`}
       {...props}
     />
   );
@@ -86,19 +91,23 @@ const ExpandableTable = <T extends { id: string } | undefined>({
       <TableBody>
         {listOfCategories.map((category) => (
           <ExpandableRow
-            key={category}
-            id={category}
+            key={category.name}
+            id={category.name}
             colSpan={columns.length}
             parentName={rootName}
+            itemsCount={categorizedItems[category.name].length}
+            className={`border-0 border-l-4 border-${category.color}`}
           >
             <>
-              {categorizedItems[category]?.map((item) =>
-                renderItem(item, category)
+              {categorizedItems[category.name]?.map((item) =>
+                renderItem(item, category.name, category.color)
               )}
             </>
           </ExpandableRow>
         ))}
-        {categorizedItems.otherItems.map((item) => renderItem(item, rootName))}
+        {categorizedItems.otherItems.map((item) =>
+          renderItem(item, rootName, "#808080")
+        )}
       </TableBody>
     </Table>
   );

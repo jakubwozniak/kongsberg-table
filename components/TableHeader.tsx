@@ -6,13 +6,20 @@ import {
 } from "@/components/ui/table";
 const TableHeader = <T,>({ columns }: TableHeaderProps<T>) => {
   return (
-    <ShadcnTableHeader>
-      <TableRow>
-        {columns.map((column, index) => (
-          <TableHead key={index} className={column.className}>
-            {column.header}
-          </TableHead>
-        ))}
+    <ShadcnTableHeader className="sticky top-0 bg-card">
+      <TableRow className="sticky">
+        {columns.map((column, index) => {
+          return (
+            <TableHead
+              key={index}
+              className={`${column.className} ${
+                index !== columns.length - 1 ? "relative left-2" : ""
+              }`}
+            >
+              {column.header}
+            </TableHead>
+          );
+        })}
       </TableRow>
     </ShadcnTableHeader>
   );

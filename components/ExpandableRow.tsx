@@ -6,11 +6,20 @@ import {
 } from "./ui/collapsible";
 import { TableCell, TableRow } from "./ui/table";
 import { useBreadcrumb } from "@/providers/BreadcrumbProvider";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
+import { ChevronDown } from "lucide-react";
 
 const ExpandableRow = ({
   id,
   colSpan,
   parentName,
+  className,
+  itemsCount,
   children,
 }: ExpandableRowProps) => {
   const {
@@ -31,12 +40,20 @@ const ExpandableRow = ({
         onClick: () => null,
       });
   };
+
   return (
     <Collapsible key={id} asChild open={breadcrumbIds.includes(id)}>
       <>
         <CollapsibleTrigger asChild onClick={() => handleTriggerClick(id)}>
-          <TableRow>
-            <TableCell colSpan={colSpan}>{id}</TableCell>
+          <TableRow
+            className={`${className} [&[data-state=open]>td>div>.chevronAnimated]:rotate-180 `}
+          >
+            <TableCell colSpan={colSpan}>
+              <div className="flex">
+                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 mr-1 chevronAnimated" />
+                {id} ({itemsCount})
+              </div>
+            </TableCell>
           </TableRow>
         </CollapsibleTrigger>
         <CollapsibleContent asChild>{children}</CollapsibleContent>

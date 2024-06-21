@@ -47,10 +47,14 @@ const TableItemCollapsible = <T extends { id: string } | undefined>({
             )
           }
         >
-          <TableRow item={item} columns={columns as Column<unknown>[]} />
+          <TableRow
+            className={props.className}
+            item={item}
+            columns={columns as Column<unknown>[]}
+          />
         </CollapsibleTrigger>
         <CollapsibleContent asChild>
-          <ShadcnTableRow>
+          <ShadcnTableRow className={props.className}>
             <TableCell colSpan={columns.length} className="bg-slate-50 py-12">
               <DetailsComponent item={item} {...props} />
             </TableCell>

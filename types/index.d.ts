@@ -30,8 +30,13 @@ interface ExpandableTableProps<T> {
   rootName: string;
   breadcrumbNamePath: string;
   itemCategoryPath: string;
-  listOfCategories: string[];
+  listOfCategories: Category[];
   [key: string]: any;
+}
+
+interface Category {
+  name: string;
+  color: string;
 }
 
 interface BooksTableProps<T> {

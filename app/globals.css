@@ -6,7 +6,7 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
+    --card: 0 0% 99%;
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
@@ -47,4 +47,30 @@
     --input: 215 27.9% 16.9%;
     --ring: 263.4 70% 50.4%;
   }
+}
+
+.max-h-calc-100vh-400px {
+  height: calc(100vh - 10rem);
+}
+
+/* Width and height of the scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

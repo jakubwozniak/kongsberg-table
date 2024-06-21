@@ -20,6 +20,9 @@ const config = {
     },
     extend: {
       colors: {
+        emerald: {
+          400: "#34d399",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -77,6 +80,12 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  safelist: [
+    "border-emerald-400",
+    "border-cyan-500",
+    "border-indigo-400",
+    // Add more classes as needed
+  ],
 } satisfies Config;
 
 export default config;
