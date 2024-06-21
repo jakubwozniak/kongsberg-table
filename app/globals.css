@@ -49,10 +49,6 @@
   }
 }
 
-.max-h-calc-100vh-400px {
-  height: calc(100vh - 10rem);
-}
-
 /* Width and height of the scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

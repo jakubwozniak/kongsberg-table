@@ -6,12 +6,6 @@ import {
 } from "./ui/collapsible";
 import { TableCell, TableRow } from "./ui/table";
 import { useBreadcrumb } from "@/providers/BreadcrumbProvider";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
 import { ChevronDown } from "lucide-react";
 
 const ExpandableRow = ({

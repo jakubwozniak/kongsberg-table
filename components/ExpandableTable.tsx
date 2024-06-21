@@ -86,30 +86,32 @@ const ExpandableTable = <T extends { id: string } | undefined>({
   );
 
   return (
-    <Table>
-      <TableHeader columns={columns} />
-      <TableBody>
-        {listOfCategories.map((category) => (
-          <ExpandableRow
-            key={category.name}
-            id={category.name}
-            colSpan={columns.length}
-            parentName={rootName}
-            itemsCount={categorizedItems[category.name].length}
-            className={`border-0 border-l-4 border-${category.color}`}
-          >
-            <>
-              {categorizedItems[category.name]?.map((item) =>
-                renderItem(item, category.name, category.color)
-              )}
-            </>
-          </ExpandableRow>
-        ))}
-        {categorizedItems.otherItems.map((item) =>
-          renderItem(item, rootName, "#808080")
-        )}
-      </TableBody>
-    </Table>
+    <div className="relative w-full h-calc-lvh-5rem max-h-calc-lvh-5rem md:max-h-calc-100vh-10rem overflow-x-auto">
+      <Table>
+        <TableHeader columns={columns} />
+        <TableBody>
+          {listOfCategories.map((category) => (
+            <ExpandableRow
+              key={category.name}
+              id={category.name}
+              colSpan={columns.length}
+              parentName={rootName}
+              itemsCount={categorizedItems[category.name].length}
+              className={`border-0 border-l-4 border-${category.color}`}
+            >
+              <>
+                {categorizedItems[category.name]?.map((item) =>
+                  renderItem(item, category.name, category.color)
+                )}
+              </>
+            </ExpandableRow>
+          ))}
+          {categorizedItems.otherItems.map((item) =>
+            renderItem(item, rootName, "#808080")
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 

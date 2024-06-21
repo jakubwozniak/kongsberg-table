@@ -37,8 +37,9 @@ export const booksColumns: Column<Book>[] = [
     className: "text-nowrap",
   },
   {
-    header: "Page Count",
+    header: "Pages",
     accessor: (item) => item.volumeInfo.pageCount,
+    className: "text-nowrap",
   },
   {
     header: "Categories",

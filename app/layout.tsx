@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <StoreProvider>
         <body className={inter.className}>
-          <div className="fixed w-screen h-screen brightness-50 grayscale-[50%]">
+          <div className="fixed w-screen h-screen brightness-50 grayscale-[75%]">
             <Image
               src="/images/books.webp"
               alt="books"

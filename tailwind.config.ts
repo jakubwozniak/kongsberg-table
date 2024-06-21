@@ -19,6 +19,14 @@ const config = {
       },
     },
     extend: {
+      height: {
+        "calc-100vh-10rem": "calc(100vh - 10rem)",
+        "calc-lvh-5rem": "calc(100dvh - 5rem)",
+      },
+      maxHeight: {
+        "calc-100vh-10rem": "calc(100vh - 10rem)",
+        "calc-lvh-5rem": "calc(100dvh - 5rem)",
+      },
       colors: {
         emerald: {
           400: "#34d399",
@@ -73,19 +81,16 @@ const config = {
         },
       },
       animation: {
-        "spin-slow": "spin 10s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
+  variants: {
+    maxHeight: ["responsive"],
+  },
   plugins: [require("tailwindcss-animate")],
-  safelist: [
-    "border-emerald-400",
-    "border-cyan-500",
-    "border-indigo-400",
-    // Add more classes as needed
-  ],
+  safelist: ["border-emerald-400", "border-cyan-500", "border-indigo-400"],
 } satisfies Config;
 
 export default config;
