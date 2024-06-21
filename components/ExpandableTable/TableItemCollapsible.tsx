@@ -3,7 +3,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
+} from "../ui/collapsible";
 
 import TableRow from "./TableRow";
 import { TableRow as ShadcnTableRow, TableCell } from "@/components/ui/table";

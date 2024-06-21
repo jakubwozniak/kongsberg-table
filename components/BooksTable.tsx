@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect } from "react";
-import ExpandableTable from "./ExpandableTable";
+import ExpandableTable from "./ExpandableTable/ExpandableTable";
 import { useGetAllBooksQuery } from "@/lib/state/books/apiSlice";
 
 import { Card, CardContent } from "./ui/card";
-import TableCardHeader from "./TableCardHeader";
+import TableCardHeader from "./ExpandableTable/TableCardHeader";
 import LoaderSpinner from "./LoaderSpinner";
 import Error from "./Error";
 import BooksTableDetails from "./BooksTableDetails";

@@ -3,8 +3,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
-import { TableCell, TableRow } from "./ui/table";
+} from "../ui/collapsible";
+import { TableCell, TableRow } from "../ui/table";
 import { useBreadcrumb } from "@/providers/BreadcrumbProvider";
 import { ChevronDown } from "lucide-react";
 

@@ -1,4 +1,3 @@
-import { Divide } from "lucide-react";
 import React from "react";
 
 const BooksTableDetails = ({ item }: { item: Book }) => {
