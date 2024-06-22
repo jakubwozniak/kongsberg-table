@@ -22,6 +22,7 @@ interface Column<T> {
   accessor: (item: T) => React.ReactNode;
   accessorValue: (item: T) => string;
   className?: string;
+  enableHiding: boolean;
 }
 
 interface ExpandableTableProps<T> {
@@ -44,6 +45,11 @@ interface Category {
 
 interface BooksTableProps<T> {
   columns: Column<T>[];
+}
+
+interface TableCardHeaderProps<T> {
+  columns: Column<T>[];
+  toggleColumnHiding: (id: string) => void;
 }
 
 interface TableHeaderProps<T> {

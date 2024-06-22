@@ -1,5 +1,5 @@
-import BooksTableAllColumns from "@/components/BooksTableAllColumns";
-import BooksTableBasicColumns from "@/components/BooksTableBasicColumns";
+import BooksTableAllColumns from "@/components/BooksTable/BooksTableAllColumns";
+import BooksTableBasicColumns from "@/components/BooksTable/BooksTableBasicColumns";
 
 export default function Home() {
   return (

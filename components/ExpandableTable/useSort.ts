@@ -1,19 +1,28 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const useSort = <T>(
   items: T[],
   columns: Column<T>[],
-  defaultSortColumnId: number | null,
+  defaultSortColumnName: string | null,
   defaultSortDirection: SortDirection
 ) => {
-  const [sortColumnId, setSortColumnId] = useState<number | null>(
-    defaultSortColumnId
-  );
+  const [sortColumnName, setSortColumnName] = useState<string | null>(null);
+  const [sortColumnId, setSortColumnId] = useState<number>(-1);
   const [sortDirection, setSortDirection] =
     useState<SortDirection>(defaultSortDirection);
 
+  useEffect(() => {
+    const index = getColumnIndex(sortColumnName);
+    if (index !== sortColumnId) setSortColumn(null);
+    if (index !== -1) {
+      if (columns[index].enableHiding) setSortColumn(null);
+    }
+
+    return () => {};
+  }, [columns]);
+
   const sortedItems = useMemo(() => {
-    if (sortColumnId === null) return items;
+    if (sortColumnId === -1) return items;
 
     return [...items].sort((itemA, itemB) => {
       const titleA =
@@ -31,11 +40,23 @@ const useSort = <T>(
       setSortDirection({
         direction: sortDirection.direction === "asc" ? "desc" : "asc",
       });
-      if (sortDirection.direction === "desc") setSortColumnId(null);
+      if (sortDirection.direction === "desc") setSortColumn(null);
     } else {
       setSortColumnId(id);
+      setSortColumnName(columns[id].header);
       setSortDirection({ direction: "asc" });
     }
+  };
+
+  const getColumnIndex = (header: string | null) => {
+    return columns.findIndex((column) => column.header === header);
+  };
+
+  const setSortColumn = (header: string | null) => {
+    const index = getColumnIndex(header);
+    setSortColumnId(index);
+    setSortColumnName(header);
+    return index;
   };
 
   return { sortedItems, sortColumnId, sortDirection, updateSortDirection };

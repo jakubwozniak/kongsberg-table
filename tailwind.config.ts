@@ -24,11 +24,11 @@ const config = {
       },
       height: {
         "calc-100vh-10rem": "calc(100vh - 10rem)",
-        "calc-lvh-5rem": "calc(100dvh - 5rem)",
+        "calc-lvh-5rem": "calc(100dvh - 4rem)",
       },
       maxHeight: {
         "calc-100vh-10rem": "calc(100vh - 10rem)",
-        "calc-lvh-5rem": "calc(100dvh - 5rem)",
+        "calc-lvh-5rem": "calc(100dvh - 4rem)",
       },
       colors: {
         emerald: {

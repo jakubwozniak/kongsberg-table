@@ -20,10 +20,13 @@ const TableHeader = <T,>({
             <TableHead
               key={index}
               onClick={() => setSortColumnId(index)}
-              className={cn(`${column.className} cursor-pointer`, {
-                "relative left-2": index !== columns.length - 1,
-                "text-neutral-700 font-semibold": index === sortColumnId,
-              })}
+              className={cn(
+                `${column.className} cursor-pointer text-muted-foreground`,
+                {
+                  "relative left-2": index !== columns.length - 1,
+                  "text-neutral-700 font-semibold": index === sortColumnId,
+                }
+              )}
             >
               <div className="flex items-center min-w-36">
                 <span className="pr-1">{column.header}</span>
