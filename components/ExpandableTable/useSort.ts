@@ -13,11 +13,13 @@ const useSort = <T>(
 
   useEffect(() => {
     const index = getColumnIndex(sortColumnName);
-    if (index !== sortColumnId) setSortColumn(null);
-    if (index !== -1) {
-      if (columns[index].enableHiding) setSortColumn(null);
-    }
 
+    if (index !== -1) {
+      if (index !== sortColumnId) setSortColumn(sortColumnName);
+      if (columns[index].enableHiding) setSortColumn(null);
+    } else {
+      setSortColumn(null);
+    }
     return () => {};
   }, [columns]);
 
