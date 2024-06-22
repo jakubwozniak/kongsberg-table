@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# KongsbergTable
 
-## Getting Started
+KongsbergTable is a web application developed as part of a recruitment process to showcase web development skills. The application is designed to display and browse various types of data using customizable table components. Currently, it retrieves and displays books from the Google Books API, but it's flexible to work with any type of data due to its generic component design. The layout emphasizes a modern aesthetic that is both clear and intuitive for users, and it is fully responsive to ensure optimal viewing and interaction on various devices.
 
-First, run the development server:
+<img width="1024" alt="table" src="https://github.com/jakubwozniak/kongsberg-table/assets/8446297/746963e9-7efe-4ab4-872a-8346ae07dacb">
+
+
+## 📋 <a name="table">Table of Contents</a>
+
+1. ⚙️ [Tech Stack](#tech-stack)
+2. 🔋 [Features](#features)
+3. 🤸 [Quick Start](#quick-start)
+
+## <a name="tech-stack">⚙️ Tech Stack</a>
+
+- Next.js
+- TypeScript
+- TailwindCSS
+- ShadCN
+- RTK Query
+
+## <a name="features">🔋 Features</a>
+
+👉 **Browse Books:** Fetches and categorizes books from the Google Books API.
+
+👉 **Sortable Columns:** Users can sort data by any column in the table.
+
+👉 **RTK Query and React Context:** Utilizes RTK Query for efficient API fetching and React context for state management.
+
+👉 **Column Visibility:** Allows users to hide columns to focus on specific data of interest.
+
+👉 **Breadcrumb Navigation:** Provides breadcrumb navigation within the table to indicate the current path and enables users to navigate back to any point within the path.
+
+## <a name="quick-start">🤸 Quick Start</a>
+
+Follow these steps to set up the project locally on your machine.
+
+**Prerequisites**
+
+Make sure you have the following installed on your machine:
+
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+
+
+**Installation**
+
+Install the project dependencies using npm:
+
+```bash
+npm install
+```
+
+**Set Up Environment Variables**
+
+Create a new file named `.env` in the root of your project and add the following content:
+
+```env
+NEXT_PUBLIC_GOOGLE_API_URL=https://www.googleapis.com/books/v1/volumes
+GOOGLE_API_KEY=
+
+```
+
+You can obtain GOOGLE_API_KEY by signing up on the  [Google](https://console.cloud.google.com/apis/credentials)
+
+**Running the Project**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
