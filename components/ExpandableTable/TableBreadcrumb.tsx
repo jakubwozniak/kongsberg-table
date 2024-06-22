@@ -20,7 +20,7 @@ const TableBreadcrumb = () => {
 
           return isLastItem ? (
             <BreadcrumbItem key={index}>
-              <BreadcrumbLink className="text-base line-clamp-1 max-w-40 md:max-w-60">
+              <BreadcrumbLink className="text-sm md:text-base line-clamp-1 max-w-36 md:max-w-60">
                 {item.label}
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -28,7 +28,7 @@ const TableBreadcrumb = () => {
             <React.Fragment key={index}>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  className="text-base hover:text-black cursor-pointer line-clamp-1 max-w-40 md:max-w-60"
+                  className="text-sm md:text-base hover:text-black cursor-pointer line-clamp-1 max-w-40 md:max-w-60"
                   onClick={item.onClick}
                 >
                   {item.label?.length > 10

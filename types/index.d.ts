@@ -9,6 +9,9 @@ interface Book {
     pageCount: number;
     categories: string[];
     language: string;
+    imageLinks: {
+      thumbnail: string;
+    };
   };
 }
 
